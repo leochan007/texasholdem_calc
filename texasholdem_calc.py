@@ -7,6 +7,8 @@ import csv
 
 import time
 
+import sys
+
 def swap(a, b) :
     return b, a
 
@@ -40,7 +42,12 @@ if __name__ == '__main__' :
 
     csvfile = open('cards.csv', 'w', newline = '')
     writer = csv.writer(csvfile)
-    count = 1000000
+    count = 100000
+
+    if len(sys.argv) > 1 :
+        count = int(sys.argv[1])
+
+    print ('num of card game:', count)
     data = list()
     t = time.time()
     for i in range(count) :

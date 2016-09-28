@@ -5,22 +5,31 @@ import csv
 
 import time
 
+import sys
+
 if __name__ == '__main__' :
 
     csvfile = open('cards.csv', 'r')
     reader = csv.reader(csvfile)
-    countAA = 0
-    countKK = 0
     total = 0
     n = 2
+
+    if len(sys.argv) > 1 :
+        n = int(sys.argv[1])
+    
+    print ('num of players:', n)
+
+    count = dict()
+    card_def = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K']
+    for card in card_def :
+        count[card] = 0
+
     for line in reader:
         total += 1
-        if line[0].find('A') != -1 and line[n].find('A') != -1 :
-            countAA += 1 
-        if line[1].find('K') != -1 and line[1 + n].find('K') != -1 :
-            countKK += 1 
-    print('total:%d countAA:%d' %(total, countAA))
-    print('total:%d countKK:%d' %(total, countKK))
-    print('AA percentage: {p}%'.format(p = countAA * 100.0 / total))
-    print('KK percentage: {p}%'.format(p = countKK * 100.0 / total))
+        if line[0][0] == line[n][0] :
+            count[line[0][0]] += 1 
+            
+    for card in card_def :
+        print('total:%d count[%s]:%d %s' % (total, card, count[card], 
+        "{c}{c}: {p}%".format(c =card, p = count[card] * 100.0 / total)))
     csvfile.close()
