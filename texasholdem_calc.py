@@ -12,7 +12,7 @@ import sys
 def swap(a, b) :
     return b, a
 
-def gen_cards(card_def, suitdef) :
+def init_cards(card_def, suitdef):
     cards = list()
     cards_str = list()
     a = 0
@@ -29,6 +29,9 @@ def gen_cards(card_def, suitdef) :
         cards_str.append('%s%s' % (card_def[sa], suit_def[sb]))
         sa += 1
         b += 1
+    return cards, cards_str
+
+def gen_cards(cards, cards_str) :
     for i in range(n) :
         j = random.randint(i, n - 1)
         cards[i], cards[j] = swap(cards[i], cards[j])
@@ -50,8 +53,9 @@ if __name__ == '__main__' :
     print ('num of card game:', count)
     data = list()
     t = time.time()
+    cards, cards_str = init_cards(card_def, suit_def)
     for i in range(count) :
-        cards, cards_str = gen_cards(card_def, suit_def)
+        cards, cards_str = gen_cards(cards, cards_str)
         data.append(cards_str)
 
     print('time to gen data:', time.time() - t)
