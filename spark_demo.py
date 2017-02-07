@@ -30,10 +30,7 @@ def init_cards(card_def, suitdef):
         b += 1
     return cards, cards_str
 
-def add_to_res(cards_str):
-    data.append(cards_str)    
-
-def gen_cards2(cards) :
+def gen_cards(cards) :
     n = 52
     for i in range(n) :
         j = random.randint(i, n - 1)
@@ -65,7 +62,7 @@ if __name__ == '__main__' :
     lst = [[cards, cards_str] for n in range(count)]
     distData = sc.parallelize(lst)
 
-    ori_data = distData.map(gen_cards2)
+    ori_data = distData.map(gen_cards)
     data = ori_data.map(lambda a: a[1]).collect()
 
     print('time to gen data:', time.time() - t)
